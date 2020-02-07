@@ -17,6 +17,14 @@
 \usepackage{float}
 
 \usepackage{physics}
+\usepackage{amssymb}
+%\usepackage{amsthm}
+
+\usepackage{ntheorem}
+\theorembodyfont{\upshape}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -25,6 +33,11 @@
 
 \usepackage{titlesec}
 \usepackage{ulem}
+
+%\newcommand\defeq{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+
+\setlength{\belowdisplayskip}{0pt} \setlength{\belowdisplayshortskip}{0pt}
+\setlength{\abovedisplayskip}{0pt} \setlength{\abovedisplayshortskip}{0pt}
 
 \titleformat*{\section}{\Large\bfseries}
 \titleformat{\subsection}{\bfseries}{\bfseries\thesubsection}{0.5em}{\ul}
@@ -48,7 +61,7 @@ Notes by Maggie Wang}
 
 \maketitle
 
-\noindent Course textbook: \textit{Understanding Machine Learning: From Theory to Algorithms} by Shai Shalev-Shwartz and Shai Ben-David.
+\noindent Course textbook: \\ \textit{Understanding Machine Learning: From Theory to Algorithms} by Shai Shalev-Shwartz and Shai Ben-David.
 
 % \maketoc
 \begin{multicols*}{2}
