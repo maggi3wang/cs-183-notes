@@ -1,0 +1,75 @@
+\subsection{Infinite-size classes can be learnable}
+
+\textbf{Lemma 6.1:}
+
+Let $\mathcal{H}$ be the set of threshold functions over the real line, namely $\mathcal{H} = \{h_a : a \in \mathbb{R}\}$, where $h_a : \mathbb{R} \rightarrow \{0, 1\}$ is a function s.t. $h_a (x) = \mathbbm{1}_{[x < a]}$. 
+
+$\mathcal{H}$ is PAC learnable, using the ERM rule, with sample complexity of $m_{\mathcal{H}}(\epsilon, \delta) \leq \left\lceil \log(2/\delta)/\epsilon \right \rceil$.
+
+\textit{Proof}: Let $a^*$ be a threshold s.t. $h^*(x) = \mathbbm{1}_{[x < a^*]}$ achieves $L_{\mathcal{D}}(h^*) = 0$. Let $\mathcal{D}_x$ be a marginal distribution over the domain $\mathcal{X}$ and let $a_0 < a^* < a_1$ be s.t. $$\mathbb{P}_{x \sim \mathcal{D}_x}[x \in (a_0, a^*)] = \mathbb{P}_{x \sim \mathcal{D}_x}[x \in (a^*, a_1)] = \epsilon.$$
+
+Given $S$ define $b_0 = \max\{x : (x, 1) \in S\}$ and $b_1 = \min\{x: (x, 0) \in S\}$. Let $b_S$ be threshold corresponding to an ERM hypothesis, $h_S$, which implies $b_S \ in (b_0, b_1)$. 
+
+Sufficient condition for $L_{\mathcal{D}}(h_S) \leq \epsilon$ is that both $b_0 \geq a_0$ and $b_1 \leq a_1$. In other words,
+\begin{align*}
+    \mathbb{P}_{S \sim \mathbb{D}^m}[L_{\mathcal{D}}(h_S) > \epsilon] &\leq \mathbb{P}_{S\sim \mathcal{D}^m}[b_0 < a_0 \cup b_1 > a_1] \\
+    & \leq \mathbb{P}_{S\sim \mathcal{D}^m}[b_0 < a_0] + \mathbb{P}_{S \sim \mathcal{D}^m}[b_1 > a_1]
+\end{align*}
+
+The event $b_0 < a_0$ happens iff all exs in $S$ are not in $(a_0, a^*)$,
+$$\mathbb{P}_{S\sim \mathcal{D}^m}[b_0 < a_0] = \mathbb{P}_{S \sim \mathcal{D}^m} [\forall (x, y) \in S, x \notin (a_0, a^*)] = (1 - \epsilon)^m \leq e^{-\epsilon m}.$$
+
+\subsection{The VC-dimension}
+
+Recall the No-Free-Lunch theorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distrbituion for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. 
+
+
+\textbf{Def 6.2}: Restriction of $\mathcal{H}$ to $C$. 
+
+Let $\mathcal{H}$ be a class of functions from $\mathcal{X} to \{0, 1\}$ and let $C = \{c_1, \dots, c_m \} \subset \mathcal{X}$. The restriction of $\mathcal{H}$ to $C$ is the set of fns from $C$ to $\{0, 1\}$ that can be derived from $\mathcal{H}$. That is,
+$$\mathcal{H}_C = \{(h(c_1), \dots, h(c_m)): h \in \mathcal{H}\}$$,
+where we represent each fn from $C$ to $\{0, 1\}$ as a vector in $\{0, 1\}^{|C|}$.
+
+% If the restriction of $\mathcal{H}$ to $C$ is the set of all fns from $C$ to $\{0, 1\}$, then we say that $\mathcal{H}$ shatters the set $C$.
+
+\textbf{Def 6.3: Shattering}: A hypothesis class $\mathcal{H}$ shatters a finite set $C \subset \mathcal{X}$ if the restriction of $\mathcal{H}$ to $C$ is the set of all functions from $C$ to $\{0, 1\}$. That is, $|\mathcal{H}_C| = 2^{|C|}$.
+
+\textbf{Corollary 6.4:} Let $\mathcal{H}$ be a hypothesis class of fns from $\mathcal{X}$ to $\{0, 1\}$. Let $m$ be a training set size. Assume that there exists a set $C \subset \mathcal{X}$ of size $2m$ that is shattered by $\mathcal{H}$. Then, for any learning algorithm, $A$, there exist a distribution $\mathcal{D}$ over $\mathcal{X} \times \{0, 1\}$ and a predictor $h \in \mathcal{H}$ s.t. $L_{\mathcal{D}}(h) = 0$ but w.p. of at least $1/7$ over the choice of $S \sim \mathcal{D}^m$ we have that $L_{\mathcal{D}}(A(S)) \geq 1/8$.
+
+\textbf{Def. 6.5: VC-dimension}: The VC-dimension of a hypothesis class $\mathcal{H}$, denoted by VCdim($\mathcal{H}$), is the maximal size of a set $C \subset \mathcal{X}$ that can be shattered by $\mathcal{H}$. If $\mathcal{H}$ can shatter sets of arbitrary large size we say that $\mathcal{H}$ has infinite VC-dimension.
+
+\textbf{Theorem 6.6:} Let $\mathcal{H}$ be a class of infinite VC-dimension. Then, $\mathcal{H}$ is not PAC learnable.
+
+Since $\mathcal{H}$ has an infinite VC-dimension, for any training set size $m$, there exists a shattered set of size $2m$.
+
+Converse is also true: A finite VC dimension guarantees learnability.
+
+\subsection{Examples}
+
+To show that VCdim($\mathcal{H}$) = $d$ we need to show that
+1. There exists a set $C$ of size $d$ that is shattered by $\mathcal{H}$.
+2. Every set $C$ of size $d + 1$ is not shattered by $\mathcal{H}$.
+
+\subsubsection{Threshold functions}
+VCdim($\mathcal{H}$) = 1
+
+\subsubsection{Intervals}
+VCdim($\mathcal{H}$) = 2
+
+\subsubsection{Axis aligned rectangles}
+VCdim($\mathcal{H}$) = 4
+
+\hrule height 0.06pt
+\medskip
+
+If $\mathcal{H}$ has finite VC-dim then $\mathcal{H}$ has the uniform convergence property.
+
+$\textit{Proof}$: 
+Sauer's Lemma: If VC dim of $\mathcal{H} = d$, then $|\mathcal{H}_c| = O(|C|^d)$. If $|\mathcal{H}_C| = O(|C|^d)$, then uniform convergence holds.
+
+% \subsubsection{Finite classes}
+
+% \subsubsection{VC-dimension and the number of parameters}
+
+% \subsection{The fundamental theorem of PAC learning}
+

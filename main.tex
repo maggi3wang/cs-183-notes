@@ -18,6 +18,7 @@
 
 \usepackage{physics}
 \usepackage{amssymb}
+\usepackage{bbm}
 %\usepackage{amsthm}
 
 \usepackage{ntheorem}
@@ -43,13 +44,14 @@
 \titleformat*{\paragraph}{\small\bfseries}
 \titleformat*{\subparagraph}{\small\bfseries}
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{3pt plus 2pt minus 2pt}
 \titlespacing\subsection{0pt}{4pt plus 0pt minus 0pt}{4pt plus 0pt minus 0pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
 \def\*#1{\mathbf{#1}}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
 
 \title{CS 183: Fundamentals of Machine Learning}
 \author{Lectures by Yaron Singer \\
@@ -83,5 +85,15 @@ Notes by Maggie Wang}
 
 \section{Lecture 2: PAC Learnability - 2/6}
 \input{lectures/lec02}
+
+\newpage
+
+\section{Lecture 3: The VC-Dimension - 2/13}
+\input{lectures/lec03}
+
+\newpage
+
+\section{Lecture 4: Learning with Convex Objectives - 2/20}
+\input{lectures/lec04}
 
 \end{document}

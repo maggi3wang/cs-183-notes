@@ -15,13 +15,13 @@ Learner's input:
 
 \subsection{Empirical Risk Minimization}
 
-Training error / empirical error / empircal risk - error the classifier incurs over the training sample: $$L_S(h) = \frac{|\{i \in [m] : h(x_i) \neq y_i \}|}{m}$$
+\textbf{Training error} / empirical error / empirical risk - error the classifier incurs over the training sample: $$L_S(h) = \frac{|\{i \in [m] : h(x_i) \neq y_i \}|}{m}$$
 
-Empirical Risk Minimization (ERM): coming up with a predictor $h$ that minimizes $L_S(h)$
+\textbf{Empirical Risk Minimization (ERM)}: coming up with a predictor $h$ that minimizes $L_S(h)$.
 
 \subsubsection{Overfitting}
 
-\textbf{Overfitting}: $h$ fits training data "too well"
+\textbf{Overfitting}: $h$ fits training data ``too well"
 
 \begin{equation*}
     h_S(x) = 
@@ -33,12 +33,17 @@ Empirical Risk Minimization (ERM): coming up with a predictor $h$ that minimizes
 
 \subsection{Empirical Risk Minimization with Inductive Bias}
 
-Apply ERM over a restricted search space (hypothesis class $\mathcal{H}$), thus biasing it towards a particular set of predictors. Such restrictions are called an inductive bias.
+Apply ERM over a restricted search space (\textbf{hypothesis class} $\mathcal{H}$), thus biasing it towards a particular set of predictors. Such restrictions are called an \textbf{inductive bias} - ideally based on prior knowledge of problem.
 
 $$\textrm{ERM}_{\mathcal{H}} (S) \in \argmin_{h \in \mathcal{H}} L_s(h)$$
 
+Tradeoff - more restricted hypothesis class better protects from overfitting but causes stronger inductive bias.
+
 \subsubsection{Finite hypothesis classes}
 
+If $\mathcal{H}$ is a finite class then $\text{ERM}_{\mathcal{H}}$ will not overfit, provided it is based on a sufficiently large training sample.
+
+Let $h_S$ denote a result of applying $\text{ERM}_H$ to $S$,
 $$h_S \in \argmin_{h \in \mathcal{H}} L_S(h)$$
 
 \textbf{Definition 2.1: The Realizability Assumption}
@@ -51,9 +56,17 @@ This assumption implies that with probability 1 over random samples, $S$, where 
 
 \textbf{The i.i.d. assumption:} $S \sim \mathcal{D}^m$, where $m$ is the size of $S$, and $\mathcal{D}^m$ denotes the probability over $m$-tuples induced by applying $\mathcal{D}$ to pick each element of the tuple independently of the other members of the tuple.
 
-\bigskip
+\smallskip
 
-\textbf{Theorem 2.3:}
+\hrule height 0.06pt
+
+\smallskip
+
+$\delta$ is probability of getting a non-representative sample, and $(1-\delta)$ is the confidence parameter of our prediction.
+
+$\epsilon$ is the accuracy parameter. Event $L_{(\mathcal{D}, f)}(h_S) > \epsilon$ is failure of the learner, while if $L_{(\mathcal{D}, f)}(h_S) \leq \epsilon$ the output of the algorithm is an approximately correct predictor.
+
+\textbf{Corollary 2.3:}
 
 Let $\mathcal{H}$ be a finite hypothesis class. Let $\delta \in (0, 1)$ and $\epsilon > 0$ and let $m$ be an integer that satisfies $m \geq \frac{\log(|\mathcal{H}| \delta)}{\epsilon}$.
 
@@ -67,12 +80,6 @@ For a sufficiently large $m$, the $\text{ERM}_\mathcal{H}$ rule over a finite hy
 \medskip
 
 \textbf{Proof:}
-
-$\delta$ is probability of getting a nonrepresentative sample, and $(1-\delta)$ is the confidence parameter of our prediction.
-
-$\epsilon$ is the accuracy parameter. Event $L_{(\mathcal{D}, f)}(h_S) > \epsilon$ is failure of the learner, while if $L_{(\mathcal{D}, f)}(h_S) \leq \epsilon$ the output of the algorithm is an approximately correct predictor.
-
-\bigskip
 
 Let $S|_x = (x_1, \dots, x_m)$ be the instances of the training set.
 
@@ -111,4 +118,11 @@ $$\mathcal{D}^m(\{S |_x : L_{(\mathcal{D}, f)} (h_S) > \epsilon) \leq \sum_{h \i
     \end{aligned}
 \end{equation*}
 
-etc.
+For each individual sampling of an element of the training set,
+$$\mathcal{D}(\{x_i : h(x_i) = y_i\}) = 1 - L_{(\mathcal{D}, f)}(h) \leq 1 - \epsilon$$
+
+Using $1 - \epsilon \leq e^{-\epsilon}$, for every $h \in \mathcal{H}_B$,
+$$\mathcal{D}^m(\{S|_x : L_S(h) = 0 \}) \leq (1-\epsilon)^m \leq e^{-\epsilon m}$$
+
+We conclude that 
+$$\mathcal{D}^m(\{S|_x : L_{(\mathcal{D}, f)}(h_S) > \epsilon \}) \leq |\mathcal{H}_B|^{-\epsilon m} \leq |\mathcal{H}| e^{-\epsilon m}$$
